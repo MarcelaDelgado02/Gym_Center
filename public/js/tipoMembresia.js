@@ -1,30 +1,37 @@
-fetch('../app/controllers/tipoMembresiaC.php', {
+document.addEventListener("DOMContentLoaded", function () {
 
-    method: 'POST',
+    const form = document.getElementById("formTipo");
 
-    headers: {
-        'Content-Type': 'application/x-www-form-urlencoded'
-    },
+    if (!form) {
+        console.error("No existe el formulario");
+        return;
+    }
 
-    body: 'accion=listar'
+    form.addEventListener("submit", function (e) {
 
-})
+        e.preventDefault();
 
-.then(response => response.json())
+        const formData = new FormData(form);
+        formData.append("accion", "crear");
 
-.then(data => {
+        fetch("../../app/controllers/tipoMembresiaC.php", { // ✅ RUTA CORRECTA
+            method: "POST",
+            body: formData
+        })
+        .then(res => res.json())
+        .then(data => {
 
-    let tabla = document.getElementById("tablaTipos");
+            if (data.success) {
+                alert("✅ Guardado");
+                location.reload();
+            } else {
+                alert("❌ Error");
+            }
 
-    data.forEach(tipo => {
-
-        tabla.innerHTML += `
-        <tr>
-            <td>${tipo.nombre}</td>
-            <td>${tipo.precio}</td>
-            <td>${tipo.duracionDias}</td>
-        </tr>
-        `;
+        })
+        .catch(err => {
+            console.error(err);
+        });
 
     });
 
