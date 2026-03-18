@@ -22,7 +22,8 @@ class tipoMembresiaC {
         $duracion = $_POST['duracionDias'];
         $recordatorio = $_POST['diasAntesRecordatorio'];
 
-        $resultado = $this->model->crear($nombre, $beneficios, $precio, $duracion, $recordatorio);
+        $estado = $_POST['estado'];
+        $resultado = $this->model->crear($nombre, $beneficios, $precio, $duracion, $recordatorio, $estado);
 
         echo json_encode(["success" => $resultado]);
     }
@@ -37,21 +38,35 @@ class tipoMembresiaC {
     $precio = $_POST['precio'];
     $duracion = $_POST['duracionDias'];
     $recordatorio = $_POST['diasAntesRecordatorio'];
+    $estado = $_POST['estado'];
 
-    $resultado = $this->model->editar($id, $nombre, $beneficios, $precio, $duracion, $recordatorio);
-
+    $resultado = $this->model->editar($id, $nombre, $beneficios, $precio, $duracion, $recordatorio, $estado);
     echo json_encode(["success" => $resultado]);
     exit;
 }
+
+ public function buscarTiposMembresia() {
+    header('Content-Type: application/json');
+    $resultado = $this->model->buscarTiposMembresia($_POST['nombre'] ?? '');
+    echo json_encode($resultado);
+}
 }
 
 
-if(isset($_POST['accion'])){
+if (isset($_POST['accion'])) {
     $controller = new tipoMembresiaC();
+    $accion = $_POST['accion'];
 
-    if($_POST['accion'] == 'crear'){
-        $controller->crear();
-    } elseif($_POST['accion'] == 'editar'){
-        $controller->editar();  
+    // Verifica si el metodo existe en la clase antes de llamarlo
+    if (method_exists($controller, $accion)) {
+        $controller->$accion(); // Llama automaticamente al método
+    } else {
+        header('Content-Type: application/json');
+        echo json_encode([
+            "success" => false,
+            "error" => "Acción '$accion' no encontrada"
+        ]);
     }
+
+
 }

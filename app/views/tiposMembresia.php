@@ -74,7 +74,12 @@ $tipos = $controller->listar();
                     <div class="col-md-4">
                         <input type="number" name="diasAntesRecordatorio" class="form-control" placeholder="Días recordatorio" required>
                     </div>
-
+                    <div class="col-md-4">
+                        <select name="estado" class="form-control">
+                            <option value="1">Activo</option>
+                            <option value="2">Inactivo</option>
+                        </select>
+                    </div>
                     <div class="col-md-4">
                         <button class="btn btn-success w-100">
                             <i class="fa-solid fa-save"></i> Guardar
@@ -91,7 +96,7 @@ $tipos = $controller->listar();
     </div>
 
 </div>
-    <hr>
+   
 
    
     
@@ -105,7 +110,7 @@ $tipos = $controller->listar();
         </div>
 
     <?php } else { ?>
-
+       
         <div class="table-responsive">
 
             <table class="table table-striped table-hover">
@@ -118,6 +123,7 @@ $tipos = $controller->listar();
                         <th>Precio</th>
                         <th>Duración</th>
                         <th>Días Recordatorio</th>
+                        <th>Estado</th>
                         <th>Acciones</th>
                     </tr>
                 </thead>
@@ -131,9 +137,11 @@ $tipos = $controller->listar();
                         <td>₡<?= $tipo->getPrecio(); ?></td>
                         <td><?= $tipo->getDuracionDias(); ?> días</td>
                         <td><?= $tipo->getDiasAntesRecordatorio(); ?></td>
+                        <td><?= $tipo->getEstado() == 1 ? 'Activo' : 'Inactivo'; ?></td>
                         <td>
-                             <button type="button" class="btn btn-danger btnEliminar " >Eliminar</button>
-                            <button type="button" class="btn btn-warning btnEditar" data-id="<?= $tipo->getIdTipoMembresia(); ?>">Editar</button>                        </td>
+                             <button type="button" class="btn btn-danger btnEliminar"data-id="<?= $tipo->getIdTipoMembresia(); ?>">Eliminar</button>
+                            <button type="button" class="btn btn-warning btnEditar" data-id="<?= $tipo->getIdTipoMembresia(); ?>">Editar</button>  
+                        </td>
                     </tr>
                 <?php } ?>
                 </tbody>
@@ -183,6 +191,13 @@ $tipos = $controller->listar();
             <input type="number" name="diasAntesRecordatorio" id="editarRecordatorio" class="form-control" required>
           </div>
 
+          <div class="mb-3">
+            <label>Estado</label>
+            <select name="estado" id="editarEstado" class="form-control">
+                <option value="1">Activo</option>
+                <option value="2">Inactivo</option>
+            </select>
+        </div>
           <button type="submit" class="btn btn-success w-100">
             <i class="fa-solid fa-save"></i> Guardar cambios
           </button>

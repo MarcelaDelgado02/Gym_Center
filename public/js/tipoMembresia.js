@@ -46,6 +46,7 @@ document.addEventListener("DOMContentLoaded", function () {
             document.getElementById("editarPrecio").value = fila.children[3].innerText.replace("₡", "");
             document.getElementById("editarDuracion").value = fila.children[4].innerText.replace(" días", "");
             document.getElementById("editarRecordatorio").value = fila.children[5].innerText;
+            document.getElementById("editarEstado").value = fila.children[6].innerText.trim() === "Activo" ? 1 : 2;
 
             
             const modal = new bootstrap.Modal(document.getElementById("modalEditar"));
@@ -80,6 +81,60 @@ document.addEventListener("DOMContentLoaded", function () {
 
     }
         
+    const inputBuscar = document.getElementById("buscarNombre");
 
+if (inputBuscar) {
+    inputBuscar.addEventListener("input", function () {
+        const nombre = inputBuscar.value.trim();
+        const formData = new FormData();
+        formData.append("accion", "buscarTiposMembresia");
+        formData.append("nombre", nombre);
+
+        fetch("../../app/controllers/tipoMembresiaC.php", {
+            method: "POST",
+            body: formData
+        })
+        .then(res => res.json())
+        .then(data => {
+            // Llamaremos a una función para actualizar la tabla con los resultados
+            actualizarTabla(data);
+        })
+        .catch(err => console.error(err));
+    });
+}
+
+function actualizarTabla(tipos) {
+    const tbody = document.querySelector("table tbody");
+    if (!tbody) return;
+
+    // Limpiar la tabla
+    tbody.innerHTML = "";
+
+    if (tipos.length === 0) {
+        tbody.innerHTML = `<tr>
+            <td colspan="8" class="text-center text-danger">No se encontraron tipos de membresía</td>
+        </tr>`;
+        return;
+    }
+
+    // Rellenar con los resultados
+    tipos.forEach(tipo => {
+        const tr = document.createElement("tr");
+        tr.innerHTML = `
+            <td>${tipo.idTipoMembresia}</td>
+            <td>${tipo.nombre}</td>
+            <td>${tipo.beneficios}</td>
+            <td>₡${tipo.precio}</td>
+            <td>${tipo.duracionDias} días</td>
+            <td>${tipo.diasAntesRecordatorio}</td>
+            <td>${tipo.estado == 1 ? 'Activo' : 'Inactivo'}</td>
+            <td>
+                <button type="button" class="btn btn-danger btnEliminar">Eliminar</button>
+                <button type="button" class="btn btn-warning btnEditar" data-id="${tipo.idTipoMembresia}">Editar</button>
+            </td>
+        `;
+        tbody.appendChild(tr);
+    });
+}
 
 });
