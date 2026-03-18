@@ -14,7 +14,7 @@ document.addEventListener("DOMContentLoaded", function () {
         const formData = new FormData(form);
         formData.append("accion", "crear");
 
-        fetch("../../app/controllers/tipoMembresiaC.php", { // ✅ RUTA CORRECTA
+        fetch("../../app/controllers/tipoMembresiaC.php", { 
             method: "POST",
             body: formData
         })
@@ -22,10 +22,10 @@ document.addEventListener("DOMContentLoaded", function () {
         .then(data => {
 
             if (data.success) {
-                alert("✅ Guardado");
+                alert(" Guardado");
                 location.reload();
             } else {
-                alert("❌ Error");
+                alert("Error");
             }
 
         })
