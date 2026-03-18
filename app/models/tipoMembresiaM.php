@@ -13,7 +13,7 @@ class tipoMembresiaM {
 
     public function obtenerTiposMembresia() {
 
-        $sql = "SELECT * FROM ttiposmembresias ORDER BY nombre";
+        $sql = "SELECT * FROM ttiposmembresias WHERE estado = 1";
         $resultado = mysqli_query($this->conn, $sql);
 
         $tipos = [];
@@ -88,6 +88,16 @@ class tipoMembresiaM {
     mysqli_stmt_close($stmt);
 
     return $tipos;
+
+}
+
+    public function eliminar($id) {
+
+    $sql = "UPDATE ttiposmembresias 
+            SET estado = 2 
+            WHERE idTipoMembresia = $id";
+
+    return mysqli_query($this->conn, $sql);
 }
     
 }

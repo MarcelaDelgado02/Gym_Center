@@ -137,4 +137,32 @@ function actualizarTabla(tipos) {
     });
 }
 
+
+document.addEventListener("click", function (e) {
+    if (e.target.classList.contains("btnEliminar")) {
+
+        if (!confirm("¿Seguro que deseas eliminar esta membresía?")) return;
+
+        const id = e.target.dataset.id;
+
+        const formData = new FormData();
+        formData.append("accion", "eliminar");
+        formData.append("idTipoMembresia", id);
+
+        fetch("../../app/controllers/tipoMembresiaC.php", {
+            method: "POST",
+            body: formData
+        })
+        .then(res => res.json())
+        .then(data => {
+            if (data.success) {
+                alert("Eliminado correctamente");
+                location.reload();
+            } else {
+                alert("Error al eliminar");
+            }
+        })
+        .catch(err => console.error(err));
+    }
+});
 });

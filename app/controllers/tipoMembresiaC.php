@@ -24,7 +24,6 @@ class tipoMembresiaC {
 
         $estado = $_POST['estado'];
         $resultado = $this->model->crear($nombre, $beneficios, $precio, $duracion, $recordatorio, $estado);
-
         echo json_encode(["success" => $resultado]);
     }
 
@@ -48,7 +47,32 @@ class tipoMembresiaC {
  public function buscarTiposMembresia() {
     header('Content-Type: application/json');
     $resultado = $this->model->buscarTiposMembresia($_POST['nombre'] ?? '');
-    echo json_encode($resultado);
+    
+    $tiposArray = [];
+    foreach ($resultado as $tipo) {
+        $tiposArray[] = [
+            "idTipoMembresia" => $tipo->getIdTipoMembresia(),
+            "nombre" => $tipo->getNombre(),
+            "beneficios" => $tipo->getBeneficios(),
+            "precio" => $tipo->getPrecio(),
+            "duracionDias" => $tipo->getDuracionDias(),
+            "diasAntesRecordatorio" => $tipo->getDiasAntesRecordatorio(),
+            "estado" => $tipo->getEstado()
+        ];
+    }
+
+    echo json_encode($tiposArray);
+    exit;
+}
+
+public function eliminar() {
+    header('Content-Type: application/json');
+
+    $id = $_POST['idTipoMembresia'];
+
+    $resultado = $this->model->eliminar($id);
+
+    echo json_encode(["success" => $resultado]);
 }
 }
 

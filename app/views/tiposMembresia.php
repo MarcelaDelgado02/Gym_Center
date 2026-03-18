@@ -110,7 +110,12 @@ $tipos = $controller->listar();
         </div>
 
     <?php } else { ?>
-       
+       <!-- Input de búsqueda -->
+        <div class="row mb-3">
+            <div class="col-md-6">
+                <input type="text" id="buscarNombre" class="form-control" placeholder="Buscar por nombre...">
+            </div>
+        </div>
         <div class="table-responsive">
 
             <table class="table table-striped table-hover">
@@ -139,8 +144,15 @@ $tipos = $controller->listar();
                         <td><?= $tipo->getDiasAntesRecordatorio(); ?></td>
                         <td><?= $tipo->getEstado() == 1 ? 'Activo' : 'Inactivo'; ?></td>
                         <td>
-                             <button type="button" class="btn btn-danger btnEliminar"data-id="<?= $tipo->getIdTipoMembresia(); ?>">Eliminar</button>
-                            <button type="button" class="btn btn-warning btnEditar" data-id="<?= $tipo->getIdTipoMembresia(); ?>">Editar</button>  
+                            <button type="button" 
+                                class="btn btn-danger btnEliminar"
+                                data-id="<?= $tipo->getIdTipoMembresia(); ?>">
+                                Eliminar
+                            </button>                            
+                            <button type="button" 
+                                class="btn btn-warning btnEditar" 
+                                data-id="<?= $tipo->getIdTipoMembresia(); ?>">
+                                Editar</button>  
                         </td>
                     </tr>
                 <?php } ?>
