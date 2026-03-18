@@ -9,12 +9,14 @@ $tipos = $controller->listar();
 <html lang="es">
 
 <head>
-<meta charset="UTF-8">
-<title>Tipos de Membresía</title>
+    <meta charset="UTF-8">
+    <title>Tipos de Membresía</title>
 
-<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/css/bootstrap.min.css">
-<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free@6.5.0/css/all.min.css">
-<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/js/bootstrap.bundle.min.js"></script>
+    
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/css/bootstrap.min.css">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free@6.5.0/css/all.min.css">
+
+    
 </head>
 
 <body>
@@ -110,7 +112,7 @@ $tipos = $controller->listar();
 
                 <thead class="table-dark">
                     <tr>
-                        
+                        <th>id</th>
                         <th>Nombre</th>
                         <th>Beneficios</th>
                         <th>Precio</th>
@@ -123,16 +125,15 @@ $tipos = $controller->listar();
                 <tbody>
                 <?php foreach($tipos as $tipo){ ?>
                     <tr>
-                        <tr data-id="<?= $tipo->getIdTipoMembresia(); ?>">
+                        <td><?= $tipo->getIdTipoMembresia(); ?></td>
                         <td><?= $tipo->getNombre(); ?></td>
                         <td><?= $tipo->getBeneficios(); ?></td>
                         <td>₡<?= $tipo->getPrecio(); ?></td>
                         <td><?= $tipo->getDuracionDias(); ?> días</td>
                         <td><?= $tipo->getDiasAntesRecordatorio(); ?></td>
                         <td>
-                             <button type="button" class="btn btn-danger">Eliminar</button>
-                             <button type="button" class="btn btn-warning">Editar</button>
-                        </td>
+                             <button type="button" class="btn btn-danger btnEliminar " >Eliminar</button>
+                            <button type="button" class="btn btn-warning btnEditar" data-id="<?= $tipo->getIdTipoMembresia(); ?>">Editar</button>                        </td>
                     </tr>
                 <?php } ?>
                 </tbody>
@@ -143,8 +144,58 @@ $tipos = $controller->listar();
 
     <?php } ?>
 
+    <!-- Modal Editar Membresía -->
+<div class="modal fade" id="modalEditar" tabindex="-1" aria-labelledby="modalEditarLabel" aria-hidden="true">
+  <div class="modal-dialog">
+    <div class="modal-content">
+
+      <div class="modal-header bg-warning text-dark">
+        <h5 class="modal-title" id="modalEditarLabel"><i class="fa-solid fa-pen"></i> Editar Membresía</h5>
+        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Cerrar"></button>
+      </div>
+
+      <div class="modal-body">
+        <form id="formEditar">
+          <input type="hidden" name="idTipoMembresia" id="editarId">
+
+          <div class="mb-3">
+            <label>Nombre</label>
+            <input type="text" name="nombre" id="editarNombre" class="form-control" required>
+          </div>
+
+          <div class="mb-3">
+            <label>Beneficios</label>
+            <textarea name="beneficios" id="editarBeneficios" class="form-control" rows="2" required></textarea>
+          </div>
+
+          <div class="mb-3">
+            <label>Precio</label>
+            <input type="number" name="precio" id="editarPrecio" class="form-control" required>
+          </div>
+
+          <div class="mb-3">
+            <label>Duración (días)</label>
+            <input type="number" name="duracionDias" id="editarDuracion" class="form-control" required>
+          </div>
+
+          <div class="mb-3">
+            <label>Días recordatorio</label>
+            <input type="number" name="diasAntesRecordatorio" id="editarRecordatorio" class="form-control" required>
+          </div>
+
+          <button type="submit" class="btn btn-success w-100">
+            <i class="fa-solid fa-save"></i> Guardar cambios
+          </button>
+        </form>
+      </div>
+
+    </div>
+  </div>
 </div>
 
-<script src="../../public/js/tipoMembresia.js"></script>
+</div>
+
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/js/bootstrap.bundle.min.js"></script>
+<script src="../../public/js/tipoMembresia.js" ></script>
 </body>
 </html>

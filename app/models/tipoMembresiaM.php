@@ -41,4 +41,17 @@ class tipoMembresiaM {
 
         return mysqli_query($this->conn, $sql);
     }
+
+    public function editar($idTipoMembresia, $nombre, $beneficios, $precio, $duracion, $recordatorio) {
+
+        $sql = "UPDATE tiposmembresias SET 
+        nombre = '$nombre',
+        beneficios = '$beneficios',
+        precio = '$precio',
+        duracionDias = '$duracion',
+        diasAntesRecordatorio = '$recordatorio'
+        WHERE idTipoMembresia = $idTipoMembresia";
+
+        return mysqli_query($this->conn, $sql);
+    }
 }
