@@ -122,27 +122,28 @@ $tipos = $controller->listar();
 
                 <thead class="table-dark">
                     <tr>
-                        <th class="d-none">id</th>
+                        <th class="d-none d-table-cell">id</th>
                         <th>Nombre</th>
                         <th>Beneficios</th>
                         <th>Precio</th>
                         <th>Duración</th>
                         <th>Días Recordatorio</th>
-                        <th class="d-none">Estado</th>
+                        <th class="d-none d-table-cell">Estado</th>
                         <th>Acciones</th>
+                        
                     </tr>
                 </thead>
 
                 <tbody>
                 <?php foreach($tipos as $tipo){ ?>
                     <tr>
-                        <td class="d-none"><?= $tipo->getIdTipoMembresia(); ?></td>
+                        <td class="d-none d-table-cell"><?= $tipo->getIdTipoMembresia(); ?></td>
                         <td><?= $tipo->getNombre(); ?></td>
                         <td><?= $tipo->getBeneficios(); ?></td>
                         <td>₡<?= $tipo->getPrecio(); ?></td>
                         <td><?= $tipo->getDuracionDias(); ?> días</td>
                         <td><?= $tipo->getDiasAntesRecordatorio(); ?></td>
-                        <td class="d-none"><?= $tipo->getEstado() == 1 ? 'Activo' : 'Inactivo'; ?></td>
+                        <td class="d-none d-table-cell"><?= $tipo->getEstado() == 1 ? 'Activo' : 'Inactivo'; ?></td>
                         <td>
                             <button type="button" 
                                 class="btn btn-danger btnEliminar"
