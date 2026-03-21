@@ -7,15 +7,17 @@ class tipoMembresia{
     private $precio;
     private $duracionDias;
     private $diasAntesRecordatorio;
+    private $estado;
 
 
-    public function __construct($idTipoMembresia,$nombre,$beneficios,$precio,$duracionDias,$diasAntesRecordatorio){
+    public function __construct($idTipoMembresia,$nombre,$beneficios,$precio,$duracionDias,$diasAntesRecordatorio,$estado ){
         $this-> idTipoMembresia = $idTipoMembresia;
         $this->nombre = $nombre;
         $this->beneficios = $beneficios;
         $this->precio = $precio;
         $this->duracionDias = $duracionDias;
         $this->diasAntesRecordatorio = $diasAntesRecordatorio;
+        $this->estado = $estado;
     }
 
     public function getIdTipoMembresia() { return $this->idTipoMembresia; }
@@ -36,7 +38,8 @@ class tipoMembresia{
     public function getDiasAntesRecordatorio() { return $this->diasAntesRecordatorio; }
     public function setDiasAntesRecordatorio($dias) { $this->diasAntesRecordatorio = $dias; }
 
-
+    public function getEstado() { return $this->estado; }
+    public function setEstado($estado) { $this->estado = $estado; }
 
 
 
